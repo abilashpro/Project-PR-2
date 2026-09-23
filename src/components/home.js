@@ -1,7 +1,10 @@
 import {IMAGES} from '../constants/ImageConstants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronDown,faCirclePlay} from '@fortawesome/free-solid-svg-icons'
-function home() {
+import { useState } from 'react'
+function Home() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+
   function such(){
     document.querySelector('.hamburger').classList.toggle('open')
     document.querySelector('.navigation').classList.toggle('active')
@@ -338,7 +341,7 @@ function home() {
     </div>
         </div>
         <div class="nav2-box">
-        <span class="nav-text2">Login</span>
+        <button class="nav-text2 login-trigger" type="button" onClick={() => setIsLoginOpen(true)}>Login</button>
         <div class="nav-con2">
           <div class="nav-btn2">Try for free</div>
         </div>
@@ -363,7 +366,7 @@ function home() {
                 <li>Company</li>
                 <li>Promo AI</li>
                 <li>Pricing</li>
-                <li>Log In</li>
+                <li onClick={() => setIsLoginOpen(true)}>Log In</li>
                 <li>Sign In</li>
             </ul>
         </nav>
@@ -1199,9 +1202,28 @@ Preview
     </div>
   </div>
 </div>
+    {isLoginOpen && (
+      <div className="login-modal" role="presentation" onClick={() => setIsLoginOpen(false)}>
+        <div className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="login-title" onClick={(event) => event.stopPropagation()}>
+          <button className="login-close" type="button" aria-label="Close login" onClick={() => setIsLoginOpen(false)}>
+            &times;
+          </button>
+          <p className="login-kicker">Welcome back</p>
+          <h2 id="login-title">Log in to Promo</h2>
+          <p className="login-description">Create and manage your videos in one place.</p>
+          <form className="login-form" onSubmit={(event) => event.preventDefault()}>
+            <label htmlFor="login-email">Email address</label>
+            <input id="login-email" name="email" type="email" autoComplete="email" required />
+            <label htmlFor="login-password">Password</label>
+            <input id="login-password" name="password" type="password" autoComplete="current-password" required />
+            <button className="login-submit" type="submit">Log in</button>
+          </form>
+          <p className="login-signup">New to Promo? <button type="button">Create an account</button></p>
+        </div>
+      </div>
+    )}
     </div>
-    
   );
 }
 
-export default home;
+export default Home;

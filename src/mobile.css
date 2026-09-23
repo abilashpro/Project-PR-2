@@ -78,6 +78,9 @@
     .hamburger{
       left: 89%;
     }
+    .login-dialog{
+      padding: 38px 24px 26px;
+    }
     /*third-page*/
     .th-im1{
       width: 270px;
