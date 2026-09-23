@@ -2,8 +2,32 @@ import {IMAGES} from '../constants/ImageConstants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronDown,faCirclePlay} from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+
+const USERS_STORAGE_KEY = 'promo-users'
+const SESSION_STORAGE_KEY = 'promo-session'
+
+function readStoredUser() {
+  try {
+    const sessionEmail = window.localStorage.getItem(SESSION_STORAGE_KEY)
+    const users = JSON.parse(window.localStorage.getItem(USERS_STORAGE_KEY) || '{}')
+    return sessionEmail ? users[sessionEmail] || null : null
+  } catch {
+    return null
+  }
+}
+
+async function hashPassword(password) {
+  const bytes = new TextEncoder().encode(password)
+  const hash = await window.crypto.subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, '0')).join('')
+}
+
 function Home() {
   const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [authMode, setAuthMode] = useState('login')
+  const [currentUser, setCurrentUser] = useState(readStoredUser)
+  const [authError, setAuthError] = useState('')
 
   function such(){
     document.querySelector('.hamburger').classList.toggle('open')
@@ -37,6 +61,51 @@ function Home() {
   function arr3(){
     document.querySelector('.arrowl4').classList.toggle('open')
   }
+
+  function openAuth(mode) {
+    setAuthMode(mode)
+    setAuthError('')
+    setIsLoginOpen(true)
+  }
+
+  async function handleAuthSubmit(event) {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get('email').trim().toLowerCase()
+    const password = formData.get('password')
+    const name = formData.get('name')?.trim()
+    const users = JSON.parse(window.localStorage.getItem(USERS_STORAGE_KEY) || '{}')
+    const passwordHash = await hashPassword(password)
+
+    if (authMode === 'signup') {
+      if (!name) {
+        setAuthError('Please enter your name.')
+        return
+      }
+      if (users[email]) {
+        setAuthError('An account with this email already exists.')
+        return
+      }
+      users[email] = { name, email, passwordHash }
+    } else if (!users[email] || users[email].passwordHash !== passwordHash) {
+      setAuthError('Incorrect email or password.')
+      return
+    }
+
+    window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
+    window.localStorage.setItem(SESSION_STORAGE_KEY, email)
+    setCurrentUser(users[email])
+    setAuthError('')
+    setIsLoginOpen(false)
+    event.currentTarget.reset()
+  }
+
+  function logOut() {
+    window.localStorage.removeItem(SESSION_STORAGE_KEY)
+    setCurrentUser(null)
+    setIsProfileOpen(false)
+  }
+
   return (
     <div>
       <section class="nav-box">
@@ -341,7 +410,11 @@ function Home() {
     </div>
         </div>
         <div class="nav2-box">
-        <button class="nav-text2 login-trigger" type="button" onClick={() => setIsLoginOpen(true)}>Login</button>
+        {currentUser ? (
+          <button class="nav-text2 login-trigger" type="button" onClick={() => setIsProfileOpen(true)}>Profile</button>
+        ) : (
+          <button class="nav-text2 login-trigger" type="button" onClick={() => openAuth('login')}>Login</button>
+        )}
         <div class="nav-con2">
           <div class="nav-btn2">Try for free</div>
         </div>
@@ -366,8 +439,8 @@ function Home() {
                 <li>Company</li>
                 <li>Promo AI</li>
                 <li>Pricing</li>
-                <li onClick={() => setIsLoginOpen(true)}>Log In</li>
-                <li>Sign In</li>
+                <li onClick={() => currentUser ? setIsProfileOpen(true) : openAuth('login')}>{currentUser ? 'Profile' : 'Log In'}</li>
+                {!currentUser && <li onClick={() => openAuth('signup')}>Sign In</li>}
             </ul>
         </nav>
     </div>
@@ -1208,17 +1281,42 @@ Preview
           <button className="login-close" type="button" aria-label="Close login" onClick={() => setIsLoginOpen(false)}>
             &times;
           </button>
-          <p className="login-kicker">Welcome back</p>
-          <h2 id="login-title">Log in to Promo</h2>
+          <p className="login-kicker">{authMode === 'login' ? 'Welcome back' : 'Get started'}</p>
+          <h2 id="login-title">{authMode === 'login' ? 'Log in to Promo' : 'Create your Promo account'}</h2>
           <p className="login-description">Create and manage your videos in one place.</p>
-          <form className="login-form" onSubmit={(event) => event.preventDefault()}>
+          <form className="login-form" onSubmit={handleAuthSubmit}>
+            {authMode === 'signup' && <>
+              <label htmlFor="login-name">Full name</label>
+              <input id="login-name" name="name" type="text" autoComplete="name" required />
+            </>}
             <label htmlFor="login-email">Email address</label>
             <input id="login-email" name="email" type="email" autoComplete="email" required />
             <label htmlFor="login-password">Password</label>
             <input id="login-password" name="password" type="password" autoComplete="current-password" required />
-            <button className="login-submit" type="submit">Log in</button>
+            {authError && <p className="login-error" role="alert">{authError}</p>}
+            <button className="login-submit" type="submit">{authMode === 'login' ? 'Log in' : 'Create account'}</button>
           </form>
-          <p className="login-signup">New to Promo? <button type="button">Create an account</button></p>
+          <p className="login-signup">
+            {authMode === 'login' ? 'New to Promo?' : 'Already have an account?'}{' '}
+            <button type="button" onClick={() => openAuth(authMode === 'login' ? 'signup' : 'login')}>
+              {authMode === 'login' ? 'Create an account' : 'Log in'}
+            </button>
+          </p>
+        </div>
+      </div>
+    )}
+    {isProfileOpen && currentUser && (
+      <div className="login-modal" role="presentation" onClick={() => setIsProfileOpen(false)}>
+        <div className="login-dialog profile-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title" onClick={(event) => event.stopPropagation()}>
+          <button className="login-close" type="button" aria-label="Close profile" onClick={() => setIsProfileOpen(false)}>&times;</button>
+          <p className="login-kicker">Your account</p>
+          <h2 id="profile-title">Profile</h2>
+          <div className="profile-details">
+            <div className="profile-avatar">{currentUser.name.charAt(0).toUpperCase()}</div>
+            <strong>{currentUser.name}</strong>
+            <span>{currentUser.email}</span>
+          </div>
+          <button className="profile-logout" type="button" onClick={logOut}>Log out</button>
         </div>
       </div>
     )}
