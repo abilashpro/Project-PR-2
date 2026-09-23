@@ -1,0 +1,147 @@
+@media (max-width:800px){
+    .first-sec1{
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+      }
+   
+    .second-box1{
+        display: inline-flex;
+       flex-direction: column;
+    }
+    .fifth-ad-box1{
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(2,minmax(min-content,max-content));
+      width: auto;
+    }
+    .fifth-im-box1{
+      width: 100%;
+    }
+    .fifth-im-box2{
+      width: 100%;
+      margin: 0;
+    }
+    .fifth-im-box3{
+      width: 100%;
+      margin: 0;
+    }
+    .fifth-im-box4{
+      width: 100%;
+      margin: 0;
+    }
+    .fifth-txt1{
+      width: 100%;
+      text-align: center;
+    }
+    .fifth-txt2{
+      width: 100%;
+      text-align: center;
+    }
+    .fifth-txt3{
+      width: 100%;
+      text-align: center;
+    }
+    .fifth-txt4{
+      width: 100%;
+      text-align: center;
+    }
+    .fifth-txt-link1{
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .fifth-txt-link2{
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .fifth-txt-link3{
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .fifth-txt-link4{
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /*sixth-page*/
+    .sixth-ad-box1{
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(2,minmax(min-content,max-content));
+      width: auto;
+      height: 50%;
+    }
+    .sixth-im-box1{
+      width: 90%;
+      margin: 0;
+    }
+    .sixth-im-box2{
+      width: 75%;
+      margin: 0;
+      margin-left: 20px;
+    }
+    .sixth-im-box3{
+      width: 90%;
+      margin: 0;
+    }
+    .sixth-im-box4{
+      width: 75%;
+      margin: 0;
+      margin-left: 20px;
+    }
+    /*sixth-box2*/
+    .sixth-ad-box2{
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(2,minmax(min-content,max-content));
+      width: auto;
+      height: 50%;
+    }
+    .sixth-im-box6{
+      width: 95%;
+      margin: 0;
+    }
+    .sixth-im-box7{
+      width: 95%;
+      margin: 0;
+    }
+    .sixth-im-box8{
+      width: 95%;
+      margin: 0;
+    }
+    .sixth-im-box9{
+      width: 95%;
+      margin: 0;
+    }
+    /*seven-page*/
+    .seventh-title{
+      display: block;
+      margin: 0;
+    }
+    .second-row1{
+      display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2,minmax(min-content,max-content));
+    justify-content: center;
+    }
+    .second-img{
+      width: 100px;
+      margin: 20px;
+    }
+    .second-img1{
+      width: 100px;
+      margin:33px 20px 20px 20px;
+    }
+    .second-img2{
+      width: 100px;
+      margin:25px 20px 20px 20px;
+    }
+    .second-title{
+      padding-bottom: 30px;
+    }
+  }
