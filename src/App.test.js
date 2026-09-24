@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders promo landing page heading", () => {
+test("renders Promzivo landing page heading", () => {
   render(<App />);
-  expect(screen.getByText(/meet promoai/i)).toBeInTheDocument();
+  expect(screen.getByText(/meet promzivoai/i)).toBeInTheDocument();
 });
