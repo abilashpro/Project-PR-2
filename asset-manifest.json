@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Project-PR-2/static/css/main.ee5f7a01.css",
-    "main.js": "/Project-PR-2/static/js/main.593e51b8.js",
-    "static/js/787.120b338f.chunk.js": "/Project-PR-2/static/js/787.120b338f.chunk.js",
+    "main.css": "/Project-PR-2/static/css/main.ea46bb0a.css",
+    "main.js": "/Project-PR-2/static/js/main.bdc385f0.js",
+    "static/js/787.acad4c9c.chunk.js": "/Project-PR-2/static/js/787.acad4c9c.chunk.js",
     "static/media/third-img4.jpg": "/Project-PR-2/static/media/third-img4.2685a15c1d4b02b72f46.jpg",
     "static/media/first-img1.jpg": "/Project-PR-2/static/media/first-img1.908a49c414871d3c13ab.jpg",
     "static/media/third-img3.jpg": "/Project-PR-2/static/media/third-img3.9942421737c657f5ed99.jpg",
@@ -37,12 +37,13 @@
     "static/media/sixth-img8.jpg": "/Project-PR-2/static/media/sixth-img8.cceb9a6bc0974d683519.jpg",
     "static/media/fifth-img11.jpg": "/Project-PR-2/static/media/fifth-img11.22de980f48c8938fb7b7.jpg",
     "index.html": "/Project-PR-2/index.html",
-    "main.ee5f7a01.css.map": "/Project-PR-2/static/css/main.ee5f7a01.css.map",
-    "main.593e51b8.js.map": "/Project-PR-2/static/js/main.593e51b8.js.map",
-    "787.120b338f.chunk.js.map": "/Project-PR-2/static/js/787.120b338f.chunk.js.map"
+    "static/media/promzivo-logo.svg": "/Project-PR-2/static/media/promzivo-logo.57deb36d29c2fa6dba06dec126782a3d.svg",
+    "main.ea46bb0a.css.map": "/Project-PR-2/static/css/main.ea46bb0a.css.map",
+    "main.bdc385f0.js.map": "/Project-PR-2/static/js/main.bdc385f0.js.map",
+    "787.acad4c9c.chunk.js.map": "/Project-PR-2/static/js/787.acad4c9c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee5f7a01.css",
-    "static/js/main.593e51b8.js"
+    "static/css/main.ea46bb0a.css",
+    "static/js/main.bdc385f0.js"
   ]
 }
